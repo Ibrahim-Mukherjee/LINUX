@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Information Exposure Lab</title>
+    <link rel="stylesheet" href="https://best.openssf.org/assets/css/style.css">
+    <link rel="stylesheet" href="checker.css">
+    <script src="js-yaml.min.js"></script>
+    <script src="checker.js"></script>
+    <link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+</head>
+<body>
+    <h1>Information Exposure Lab</h1>
+
+    <p>This is a lab exercise on developing secure software. For more information, see the introduction to the labs.</p>
+
+    <h2>Objective</h2>
+    <p>In this exercise, you will modify a Python Flask application to minimize information exposure in error messages, enhancing its security. You'll focus on providing generic error messages to users while logging detailed information for debugging purposes.</p>
+
+    <h2>Context</h2>
+    <p>Minimizing information exposure in error messages is crucial for application security. Detailed error messages can provide attackers with valuable information about the system's structure or behavior. In this lab, we'll focus on a Python Flask application that handles user authentication.</p>
+
+    <h2>Task</h2>
+    <p>Please modify the code below to replace the detailed error messages with generic ones. You should also ensure that detailed error information is logged for debugging purposes.</p>
+
+    <pre><code>from flask import Flask, request, jsonify
+import logging
+
+app = Flask(__name__)
+logging.basicConfig(level=logging.INFO)
+
+def valid_login(username, password):
+    # Simulated login validation
+    return username == "user" and password == "password"
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.json.get('username')
+    password = request.json.get('password')
+
+    if not username or not password:
+        # TODO: Replace this detailed error message with a generic one
+        # TODO: Log the detailed error information
+        return jsonify({"error": f"Missing {'username' if not username else 'password'}"}), 400
+
+    if not valid_login(username, password):
+        # TODO: Replace this detailed error message with a generic one
+        # TODO: Log the detailed error information
+        return jsonify({"error": "Invalid username or password"}), 401
+
+    return jsonify({"message": "Login successful"}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
+
+    <textarea id="attempt0" rows="10" cols="60" spellcheck="false">
+# Replace the detailed error messages and add logging here
+</textarea>
+
+    <button type="button" class="hintButton">Hint</button>
+    <button type="button" class="resetButton">Reset</button>
+    <button type="button" class="giveUpButton">Give up</button>
+    <br><br>
+
+    <script id="expected0" type="plain/text">
+if not username or not password:
+    logging.info(f"Login attempt failed: Missing {'username' if not username else 'password'}")
+    return jsonify({"error": "Invalid input"}), 400
+
+if not valid_login(username, password):
+    logging.info(f"Login attempt failed for user: {username}")
+    return jsonify({"error": "Authentication failed"}), 401
+    </script>
+
+    <script id="correct0" type="plain/text">
+/logging\.info.*Missing.*username.*password.*return jsonify.*error.*Invalid input.*400.*logging\.info.*Login attempt failed for user.*return jsonify.*error.*Authentication failed.*401/s
+    </script>
+
+    <div id="hint0" style="display: none;">
+        <p>Hint 1: Use logging.info() to log detailed information.</p>
+        <p>Hint 2: Return a generic error message to the user.</p>
+        <p>Hint 3: For the first case, log the missing field and return "Invalid input".</p>
+        <p>Hint 4: For the second case, log the failed login attempt and return "Authentication failed".</p>
+    </div>
+
+    <p>This lab was developed by Ibrahim Mukherjee for The Linux Foundation and www.sanra.co.</p>
+</body>
+</html>

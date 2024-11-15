@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cache Control Lab</title>
+    <link rel="stylesheet" href="https://best.openssf.org/assets/css/style.css">
+    <link rel="stylesheet" href="checker.css">
+    <script src="js-yaml.min.js"></script>
+    <script src="checker.js"></script>
+    <link rel="license" href="https://creativecommons.org/licenses/by/4.0/">
+</head>
+<body>
+    <h1>Cache Control Lab</h1>
+
+    <p>This is a lab exercise on developing secure software. For more information, see the introduction to the labs.</p>
+
+    <h2>Objective</h2>
+    <p>In this exercise, you will modify a Python Flask application to implement proper cache control, enhancing its security. You'll focus on preventing caching of sensitive information by adding the appropriate Cache-Control header.</p>
+
+    <h2>Context</h2>
+    <p>Minimizing cache through proper Cache-Control is crucial for application security. It prevents attackers from gaining insights that could be used to exploit vulnerabilities. In this lab, we'll focus on a Python Flask application that handles sensitive data.</p>
+
+    <h2>Task</h2>
+    <p>Please modify the code below to add the missing Cache-Control header. This header is essential for preventing sensitive data from being cached by the client or intermediaries.</p>
+
+    <pre><code>from flask import Flask, Response
+
+app = Flask(__name__)
+
+@app.route('/sensitive-data')
+def sensitive_data():
+    data = "This is sensitive information"
+    response = Response(data)
+    # TODO: Add the Cache-Control header here
+    return response
+
+if __name__ == '__main__':
+    app.run(debug=True)
+</code></pre>
+
+    <textarea id="attempt0" rows="5" cols="60" spellcheck="false">
+# Add the Cache-Control header here
+</textarea>
+
+    <button type="button" class="hintButton">Hint</button>
+    <button type="button" class="resetButton">Reset</button>
+    <button type="button" class="giveUpButton">Give up</button>
+    <br><br>
+
+    <script id="expected0" type="plain/text">
+response.headers['Cache-Control'] = 'no-store, must-revalidate'
+    </script>
+
+    <script id="correct0" type="plain/text">
+/response\.headers\['Cache-Control'\]\s*=\s*'no-store,\s*must-revalidate'/
+    </script>
+
+    <div id="hint0" style="display: none;">
+        <p>Hint 1: The Cache-Control header should prevent storing and force revalidation.</p>
+        <p>Hint 2: Use 'no-store' to prevent storing and 'must-revalidate' to force revalidation.</p>
+        <p>Hint 3: The correct syntax is: response.headers['Cache-Control'] = 'no-store, must-revalidate'</p>
+    </div>
+
+    <p>This lab was developed by Ibrahim Mukherjee for The Linux Foundation and www.sanra.co.</p>
+</body>
+</html>
